@@ -12,7 +12,7 @@ require "attr_bitwise/version"
 #
 # Example
 # class MyModel < ActiveRecord::Base
-#   include BitwiseUtils
+#   include AttrBitwise
 #
 #   attr_bitwise :payment_types, mapping: [:slots, :credits]
 # end
