@@ -33,6 +33,17 @@ Bitwise attribute for ruby class and Rails model
 ```
 
 
+## Install
+
+
+### Inline
+
+- `gem install bitwise_attr`
+
+### Gemfile
+
+- `gem 'bitwise_attr'`
+
 
 ----------------------------------------
 Maintainers :  @wittydeveloper and @FSevaistre 
