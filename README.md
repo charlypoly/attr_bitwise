@@ -60,7 +60,10 @@ Shop.with_all_fruits(:apples, :bananas).select(:address)
 
 ### "Dynamic methods"
 
+**Notes :**
+
 *Exemple with name = 'fruits'*
+
 *`value` is always a `Fixnum`*
 
 
