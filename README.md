@@ -1,37 +1,10 @@
 # `attr_bitwise` ![https://circleci.com/gh/wittydeveloper/attr_bitwise.png?circle-token=7f58370c3b13faaf1954b9e8fe6c7b1fb329daf2](https://circleci.com/gh/wittydeveloper/attr_bitwise.png?circle-token=7f58370c3b13faaf1954b9e8fe6c7b1fb329daf2)
 Bitwise attribute for ruby class and Rails model
 
-```ruby
-# Helper to define a bits based value on a Rails model attribute
-#   this helper expose a set of methods to make bitwise operations
-#
-#
-# Usage :
-#   attr_bitwise :<name>, [column_name: <column_name>,] mapping: <values_sym>
-#
-# Example
-# class MyModel < ActiveRecord::Base
-#   include BitwiseAttr
-#
-#   attr_bitwise :payment_types, mapping: [:slots, :credits]
-# end
-#
-# Will define the following high-level methods :
-#   - Class#payment_types => [<Symbol>, ...]
-#   - Class#payment_type?(value_or_sym) => Boolean
-#   - Class#add_payment_type(value_or_sym) => Fixnum
-#   - Class#remove_payment_type(value_or_sym) => Fixnum
-#
-# Will define the following low-level methods :
-#   - Class.to_bitwise_values(object, name) => [<Fixnum>, ...]
-#   - Class#payment_types_union([Fixnum, ..]) => [Fixnum, ..]
-#   - Class.bitwise_union([Fixnum, ..], name) => [Fixnum, ..]
-#   - Class#payment_types_intersection([Fixnum, ..]) => [Fixnum, ..]
-#   - Class.bitwise_intersection([Fixnum, ..], name) => [Fixnum, ..]
-#   - Class#payment_types_mapping => Hash
-#
-```
+## Features
 
+- bitwise attribute + helpers, useful for storing multiple states in one place
+- ActiveRecord compatible
 
 ## Install
 
@@ -44,6 +17,87 @@ Bitwise attribute for ruby class and Rails model
 
 - `gem 'bitwise_attr'`
 
+
+## Usage
+
+```ruby
+attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
+```
+
+## Example
+
+With a shop selling many types of fruits
+
+```ruby
+
+class Shop < ActiveRecord::Base
+  include BitwiseAttr
+
+  attr_bitwise :fruits, mapping: [:apples, :bananas, :pears]
+
+  scope :with_any_fruits, lambda { |*fruits_sym|
+    where(fruits_value: bitwise_union(*fruits_sym, 'fruits'))
+  }
+
+  scope :with_all_fruits, lambda { |*fruits_sym|
+    where(fruits_value: bitwise_intersection(*fruits_sym, 'fruits'))
+  }
+
+end
+
+### 
+
+# return all shops that sell at least bananas or apples
+Shop.with_any_fruits(:apples, :bananas).select(:address)
+
+# return all shops that sell bananas and apples
+Shop.with_all_fruits(:apples, :bananas).select(:address)
+
+```
+
+
+## API
+
+### "Dynamic methods"
+
+*Exemple with name = 'fruits'*
+*`value` is always a `Fixnum`*
+
+
+- `Class#fruits #=> [<Symbol>, ...]`
+Return current value as symbols
+
+- `Class#fruit?(value_or_sym) #=> Boolean`
+Return true if current value contains `value_or_sym`
+
+
+- `Class#add_fruit(value_or_sym) #=> Fixnum`
+Add `value_or_sym` to value
+
+
+- `Class#remove_fruit(value_or_sym) #=> Fixnum`
+Remove `value_or_sym` from value
+
+
+- `Class#fruits_union([value_or_sym, ..]) #=> [Fixnum, ..]`
+Given an array of value (fixnum) or symbols, return bitwise union
+
+- `Class#fruits_intersection([value_or_sym, ..]) #=> [Fixnum, ..]`
+Given an array of value (fixnum) or symbols, return bitwise intersection
+
+- `Class#fruits_mapping #=> Hash`
+Return symbol->value mapping
+
+### Others methods
+
+- `Class.to_bitwise_values(object, name) #=> [<Fixnum>, ...]`
+Given an `Object` and a attribute name, return value (Fixnum) depending on mapping
+
+- `Class.bitwise_union([Fixnum, ..], name) #=> [Fixnum, ..]`
+Given an array of value (fixnum) or symbols and a attribute name, return bitwise union
+
+- `Class.bitwise_intersection([Fixnum, ..], name) #=> [Fixnum, ..]`
+Given an array of value (fixnum) or symbols and a attribute name, return bitwise intersection
 
 ----------------------------------------
 Maintainers :  @wittydeveloper and @FSevaistre 
