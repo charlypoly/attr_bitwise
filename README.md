@@ -65,38 +65,48 @@ Shop.with_all_fruits(:apples, :bananas).select(:address)
 
 
 - `Class#fruits #=> [<Symbol>, ...]`
+
 Return current value as symbols
 
 - `Class#fruit?(value_or_sym) #=> Boolean`
+
 Return true if current value contains `value_or_sym`
 
 
 - `Class#add_fruit(value_or_sym) #=> Fixnum`
+
 Add `value_or_sym` to value
 
 
 - `Class#remove_fruit(value_or_sym) #=> Fixnum`
+
 Remove `value_or_sym` from value
 
 
 - `Class#fruits_union([value_or_sym, ..]) #=> [Fixnum, ..]`
+
 Given an array of value (fixnum) or symbols, return bitwise union
 
 - `Class#fruits_intersection([value_or_sym, ..]) #=> [Fixnum, ..]`
+
 Given an array of value (fixnum) or symbols, return bitwise intersection
 
 - `Class#fruits_mapping #=> Hash`
+
 Return symbol->value mapping
 
 ### Others methods
 
 - `Class.to_bitwise_values(object, name) #=> [<Fixnum>, ...]`
+
 Given an `Object` and a attribute name, return value (Fixnum) depending on mapping
 
 - `Class.bitwise_union([Fixnum, ..], name) #=> [Fixnum, ..]`
+
 Given an array of value (fixnum) or symbols and a attribute name, return bitwise union
 
 - `Class.bitwise_intersection([Fixnum, ..], name) #=> [Fixnum, ..]`
+
 Given an array of value (fixnum) or symbols and a attribute name, return bitwise intersection
 
 ----------------------------------------
