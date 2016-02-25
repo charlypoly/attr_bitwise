@@ -7,12 +7,12 @@ describe AttrBitwise do
 
     include AttrBitwise
 
-    attr_accessor :payment_types_value
+    attr_accessor :fruits_value
 
-    attr_bitwise :payment_types, mapping: [:slots, :credits]
+    attr_bitwise :fruits, mapping: [:banana, :apple]
 
     def initialize
-      @payment_types_value = 0
+      @fruits_value = 0
     end
 
   end
@@ -26,10 +26,10 @@ describe AttrBitwise do
         expect(
           TestClass.to_bitwise_values(
             {
-              a: :credits,
-              b: :slots
+              a: :apple,
+              b: :banana
             },
-            'payment_types'
+            'fruits'
           )
         ).to eq [2, 1]
       end
@@ -38,101 +38,101 @@ describe AttrBitwise do
     context 'with Array argument' do
       it do
         expect(TestClass.to_bitwise_values(
-          [:credits, :slots],
-          'payment_types'
+          [:apple, :banana],
+          'fruits'
         )).to eq [2, 1]
       end
     end
 
     context 'with Fixnum argument' do
       it do
-        expect(TestClass.to_bitwise_values(1, 'payment_types')).to eq 1
+        expect(TestClass.to_bitwise_values(1, 'fruits')).to eq 1
       end
     end
 
   end
 
-  context 'with `payment_types` attribute_name' do
+  context 'with `fruits` attribute_name' do
 
-    context '#payment_types=' do
+    context '#fruits=' do
 
-      before { subject.payment_types = [:slots, :credits] }
+      before { subject.fruits = [:banana, :apple] }
 
       it 'should set proper value' do
-        expect(subject.payment_types_value).to eq 3
-        expect(subject.payment_types).to eq [:slots, :credits]
+        expect(subject.fruits_value).to eq 3
+        expect(subject.fruits).to eq [:banana, :apple]
       end
 
     end
 
-    context 'with `payment_types_value` = 0' do
-      context '#payment_types' do
+    context 'with `fruits_value` = 0' do
+      context '#fruits' do
 
         it do
-          expect(subject.payment_types).to eq []
+          expect(subject.fruits).to eq []
         end
 
       end
 
-      context '#add_payment_type' do
+      context '#add_fruit' do
 
         it do
-          subject.add_payment_type(:slots)
-          expect(subject.payment_types).to eq [:slots]
+          subject.add_fruit(:banana)
+          expect(subject.fruits).to eq [:banana]
         end
 
         context 'when called twice, each type remains unique' do
           it do
-            subject.add_payment_type(:slots)
-            subject.add_payment_type(:slots)
-            expect(subject.payment_types).to eq [:slots]
+            subject.add_fruit(:banana)
+            subject.add_fruit(:banana)
+            expect(subject.fruits).to eq [:banana]
           end
         end
 
       end
 
-      context '#payment_type?(:slots)' do
+      context '#fruit?(:banana)' do
 
         it do
-          expect(subject.payment_type?(:slots)).to eq false
+          expect(subject.fruit?(:banana)).to eq false
         end
 
       end
     end
 
-    context 'with `payment_types_value` = 3' do
+    context 'with `fruits_value` = 3' do
 
-      before { subject.payment_types_value = 3 }
+      before { subject.fruits_value = 3 }
 
-      context '#payment_types' do
+      context '#fruits' do
 
         it do
-          expect(subject.payment_types).to eq [:slots, :credits]
+          expect(subject.fruits).to eq [:banana, :apple]
         end
 
       end
 
-      context '#payment_type?(:slots)' do
+      context '#fruit?(:banana)' do
 
         it do
-          expect(subject.payment_type?(:slots)).to eq true
+          expect(subject.fruit?(:banana)).to eq true
         end
 
       end
 
-      context '#remove_payment_type' do
+      context '#remove_fruit' do
 
         it do
-          subject.remove_payment_type(:slots)
-          expect(subject.payment_types).to eq [:credits]
+          subject.remove_fruit(:banana)
+          expect(subject.fruits).to eq [:apple]
         end
 
       end
 
-      context '#payment_types_union' do
+      context '#fruits_union' do
 
         it do
-          expect(subject.payment_types_union(1, 2)).to eq [1, 3, 2]
+          expect(subject.fruits_union(1, 2)).to eq [1, 3, 2]
         end
 
       end
@@ -141,7 +141,7 @@ describe AttrBitwise do
 
         it do
           expect(
-            TestClass.bitwise_union(1, 2, 'payment_types')
+            TestClass.bitwise_union(1, 2, 'fruits')
           ).to eq [1, 3, 2]
         end
 
@@ -151,7 +151,7 @@ describe AttrBitwise do
 
         it do
           expect(
-            TestClass.bitwise_intersection(1, 2, 'payment_types')
+            TestClass.bitwise_intersection(1, 2, 'fruits')
           ).to eq [3]
         end
 
