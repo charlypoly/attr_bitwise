@@ -11,11 +11,11 @@ Bitwise attribute for ruby class and Rails model
 
 ### Inline
 
-- `gem install bitwise_attr`
+- `gem install attr_bitwise`
 
 ### Gemfile
 
-- `gem 'bitwise_attr'`
+- `gem 'attr_bitwise'`
 
 
 ## Usage
@@ -31,7 +31,7 @@ With a shop selling many types of fruits
 ```ruby
 
 class Shop < ActiveRecord::Base
-  include BitwiseAttr
+  include AttrBitwise
 
   attr_bitwise :fruits, mapping: [:apples, :bananas, :pears]
 
