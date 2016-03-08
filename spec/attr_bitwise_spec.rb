@@ -1,5 +1,4 @@
 require_relative '../lib/attr_bitwise.rb'
-require 'pry'
 
 describe AttrBitwise do
 
