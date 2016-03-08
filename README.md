@@ -71,6 +71,11 @@ Shop.with_all_fruits(:apples, :bananas).select(:address)
 
 Return current value as symbols
 
+- `Class#fruit == value_or_sym) #=> Boolean`
+
+Return true if current value equals (strictly) `value_or_sym`
+
+
 - `Class#fruit?(value_or_sym) #=> Boolean`
 
 Return true if current value contains `value_or_sym`

@@ -35,6 +35,21 @@ require "attr_bitwise/version"
 module AttrBitwise
   extend ActiveSupport::Concern
 
+
+  # Custom class that allow to use shortcut :
+  #   my_column == :banana
+  # instead of
+  #   my_column == [:banana]
+  class ComparableSymbolsArray < Array
+    def ==(other_object)
+      if other_object.is_a?(Symbol)
+        self.size == 1 && self.first == other_object
+      else
+        super(other_object)
+      end
+    end
+  end
+
   # ClassMethods
   module ClassMethods
     ######################
@@ -199,8 +214,10 @@ module AttrBitwise
   # Return current value to symbols array
   #   Ex : 011 => :slots, :credits
   def value_getter(mapping)
-    mapping.values.select { |pv| (value & pv) != 0 }.
-      map { |v| value_to_sym(v, mapping) }
+    ComparableSymbolsArray.new(
+      mapping.values.select { |pv| (value & pv) != 0 }.
+        map { |v| value_to_sym(v, mapping) }
+    )
   end
 
   # Set current values from values array

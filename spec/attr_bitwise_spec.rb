@@ -1,4 +1,5 @@
 require_relative '../lib/attr_bitwise.rb'
+require 'pry'
 
 describe AttrBitwise do
 
@@ -61,6 +62,26 @@ describe AttrBitwise do
       it 'should set proper value' do
         expect(subject.fruits_value).to eq 3
         expect(subject.fruits).to eq [:banana, :apple]
+      end
+
+    end
+
+    context '#fruits==' do
+
+      context 'when value is incorrect' do
+        before { subject.fruits = [:banana, :apple] }
+
+        it do
+          expect(subject.fruits == :banana).to eq false
+        end
+      end
+
+      context 'when value is correct' do
+        before { subject.fruits = [:banana] }
+
+        it do
+          expect(subject.fruits == :banana).to eq true
+        end
       end
 
     end
