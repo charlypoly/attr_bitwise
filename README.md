@@ -26,32 +26,32 @@ attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
 
 ## Example
 
-With a shop selling many types of fruits
+You have a website with many locales (English, French, German...) with specific content in each locale. You want your users to be able to chose which content they want to see and you want to be able to query the users by the locales they have choosen.
 
 ```ruby
 
-class Shop < ActiveRecord::Base
+class User < ActiveRecord::Base
   include AttrBitwise
 
-  attr_bitwise :fruits, mapping: [:apples, :bananas, :pears]
+  attr_bitwise :locales, mapping: [:en, :fr, :de]
 
-  scope :with_any_fruits, lambda { |*fruits_sym|
-    where(fruits_value: bitwise_union(*fruits_sym, 'fruits'))
+  scope :with_any_locales, lambda { |*locales_sym|
+    where(locales_value: bitwise_union(*locales_sym, 'locales'))
   }
 
-  scope :with_all_fruits, lambda { |*fruits_sym|
-    where(fruits_value: bitwise_intersection(*fruits_sym, 'fruits'))
+  scope :with_all_locales, lambda { |*locales_sym|
+    where(locales_value: bitwise_intersection(*locales_sym, 'locales'))
   }
 
 end
 
 ### 
 
-# return all shops that sell at least bananas or apples
-Shop.with_any_fruits(:apples, :bananas).select(:address)
+# return all users who can see at least english or french content
+User.with_any_locales(:en, :fr)
 
-# return all shops that sell bananas and apples
-Shop.with_all_fruits(:apples, :bananas).select(:address)
+# return all users who can see english and french content
+User.with_all_locales(:en, :fr)
 
 ```
 
@@ -62,44 +62,44 @@ Shop.with_all_fruits(:apples, :bananas).select(:address)
 
 **Notes :**
 
-*Exemple with name = 'fruits'*
+*Exemple with name = 'locales'*
 
 *`value` is always a `Fixnum`*
 
 
-- `Class#fruits #=> [<Symbol>, ...]`
+- `Class#locales #=> [<Symbol>, ...]`
 
 Return current value as symbols
 
-- `Class#fruit == value_or_sym) #=> Boolean`
+- `Class#locale == value_or_sym) #=> Boolean`
 
 Return true if current value equals (strictly) `value_or_sym`
 
 
-- `Class#fruit?(value_or_sym) #=> Boolean`
+- `Class#locale?(value_or_sym) #=> Boolean`
 
 Return true if current value contains `value_or_sym`
 
 
-- `Class#add_fruit(value_or_sym) #=> Fixnum`
+- `Class#add_locale(value_or_sym) #=> Fixnum`
 
 Add `value_or_sym` to value
 
 
-- `Class#remove_fruit(value_or_sym) #=> Fixnum`
+- `Class#remove_locale(value_or_sym) #=> Fixnum`
 
 Remove `value_or_sym` from value
 
 
-- `Class#fruits_union([value_or_sym, ..]) #=> [Fixnum, ..]`
+- `Class#locales_union([value_or_sym, ..]) #=> [Fixnum, ..]`
 
 Given an array of value (fixnum) or symbols, return bitwise union
 
-- `Class#fruits_intersection([value_or_sym, ..]) #=> [Fixnum, ..]`
+- `Class#locales_intersection([value_or_sym, ..]) #=> [Fixnum, ..]`
 
 Given an array of value (fixnum) or symbols, return bitwise intersection
 
-- `Class#fruits_mapping #=> Hash`
+- `Class#locales_mapping #=> Hash`
 
 Return symbol->value mapping
 
