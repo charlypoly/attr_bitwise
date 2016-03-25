@@ -58,64 +58,168 @@ User.with_all_locales(:en, :fr)
 
 ## API
 
-### "Dynamic methods"
+**Examples with <code>name = 'locales'</code>**
 
-**Notes :**
+### High level methods
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Return</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locales</code>
+    </td>
+    <td>
+      <code>[<Symbol>, ...]</code>
+    </td>
+    <td>
+      Return values as symbols
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locale == fixnum_or_sym</code>
+    </td>
+    <td>
+      <code>Boolean</code>
+    </td>
+    <td>
+      Return true if value contains only Fixnum or Symbol
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locale?(fixnum_or_sym)</code>
+    </td>
+    <td>
+      <code>Boolean</code>
+    </td>
+    <td>
+      Return true if value contains Fixnum or Symbol
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#add_locale(value_or_sym)</code>
+    </td>
+    <td>
+      <code>Fixnum</code>
+    </td>
+    <td>
+      Add Fixnum or Symbol to value
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#remove_locale(value_or_sym)</code>
+    </td>
+    <td>
+      <code>Fixnum</code>
+    </td>
+    <td>
+      Remove Fixnum or Symbol to value
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locales_union([value_or_sym, ..])</code>
+    </td>
+    <td>
+      <code>[Fixnum, ..]</code>
+    </td>
+    <td>
+      Given an array of values (Fixnum or Symbol), return bitwise union computation <br>
+      Return all possible values (mask) for an union of given values
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locales_intersection([value_or_sym, ..])</code>
+    </td>
+    <td>
+      <code>[Fixnum, ..]</code>
+    </td>
+    <td>
+      Given an array of values (Fixnum or Symbol), return bitwise intersection computation <br>
+      Return all possible values (mask) for an intersection of given values
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locales_mapping</code>
+    </td>
+    <td>
+      <code>Hash</code>
+    </td>
+    <td>
+      Return <code>Symbol</code> -> <code>Fixnum</code> mapping
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
 
-*Exemple with name = 'locales'*
-
-*`value` is always a `Fixnum`*
+</table>
 
 
-- `Class#locales #=> [<Symbol>, ...]`
+### Low level methods
 
-Return current value as symbols
-
-- `Class#locale == value_or_sym) #=> Boolean`
-
-Return true if current value equals (strictly) `value_or_sym`
+*Theses methods are static, so a <code>name</code> parameters is mandatory in order to fetch mapping*
 
 
-- `Class#locale?(value_or_sym) #=> Boolean`
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Return</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>
+      <code>Class.to_bitwise_values(object, name)</code>
+    </td>
+    <td>
+      <code>[Fixnum, ...]</code>
+    </td>
+    <td>
+      Given an Object and a attribute name, return Fixnum value depending on mapping
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class.bitwise_union([Fixnum, ..], name)</code>
+    </td>
+    <td>
+      <code>[Fixnum, ..]</code>
+    </td>
+    <td>
+      Given an array of values (Fixnum or Symbol) and a attribute name, return bitwise union computation <br>
+      Return all possible values (mask) for an union of given values
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class.bitwise_intersection([Fixnum, ..], name)</code>
+    </td>
+    <td>
+      <code>[Fixnum, ..]</code>
+    </td>
+    <td>
+      Given an array of values (Fixnum or Symbol) and a attribute name, return bitwise intersection computation <br>
+      Return all possible values (mask) for an intersection of given values
+    </td>
+  </tr>
 
-Return true if current value contains `value_or_sym`
+</table>
 
-
-- `Class#add_locale(value_or_sym) #=> Fixnum`
-
-Add `value_or_sym` to value
-
-
-- `Class#remove_locale(value_or_sym) #=> Fixnum`
-
-Remove `value_or_sym` from value
-
-
-- `Class#locales_union([value_or_sym, ..]) #=> [Fixnum, ..]`
-
-Given an array of value (fixnum) or symbols, return bitwise union
-
-- `Class#locales_intersection([value_or_sym, ..]) #=> [Fixnum, ..]`
-
-Given an array of value (fixnum) or symbols, return bitwise intersection
-
-- `Class#locales_mapping #=> Hash`
-
-Return symbol->value mapping
-
-### Others methods
-
-- `Class.to_bitwise_values(object, name) #=> [<Fixnum>, ...]`
-
-Given an `Object` and a attribute name, return value (Fixnum) depending on mapping
-
-- `Class.bitwise_union([Fixnum, ..], name) #=> [Fixnum, ..]`
-
-Given an array of value (fixnum) or symbols and a attribute name, return bitwise union
-
-- `Class.bitwise_intersection([Fixnum, ..], name) #=> [Fixnum, ..]`
-
-Given an array of value (fixnum) or symbols and a attribute name, return bitwise intersection
 
 ----------------------------------------
-Maintainers :  @wittydeveloper and @FSevaistre 
+Maintainers :  [@wittydeveloper](https://github.com/wittydeveloper) and [@FSevaistre](https://github.com/FSevaistre)
