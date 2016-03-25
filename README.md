@@ -157,16 +157,7 @@ User.with_all_locales(:en, :fr)
       Return <code>Symbol</code> -> <code>Fixnum</code> mapping
     </td>
   </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+
 
 </table>
 
