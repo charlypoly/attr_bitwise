@@ -6,6 +6,9 @@ Bitwise attribute for ruby class and Rails model
 - bitwise attribute + helpers, useful for storing multiple states in one place
 - ActiveRecord compatible
 
+[Please read this article for some concrete examples](https://medium.com/jobteaser-dev-team/rails-bitwise-enum-with-super-powers-5030bda5dbab)
+
+
 ## Install
 
 
