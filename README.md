@@ -83,6 +83,17 @@ User.with_all_locales(:en, :fr)
   </tr>
   <tr>
     <td>
+      <code>Class#locales=([value_or_sym, ..])</code>
+    </td>
+    <td>
+      <code>[<Symbol>, ...]</code>
+    </td>
+    <td> 
+      Given an array of values (Fixnum or Symbol) or single value (Fixnum or Symbol) add them to value.
+    </td>
+  </tr>
+  <tr>
+    <td>
       <code>Class#locale == fixnum_or_sym</code>
     </td>
     <td>
