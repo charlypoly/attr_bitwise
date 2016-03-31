@@ -74,10 +74,7 @@ module AttrBitwise
       define_method("#{name}") { send(:value_getter, bitwise_mapping) }
 
       define_method("#{name}=") do |values_or_symbols_array|
-        unless values_or_symbols_array.is_a?(Array)
-          values_or_symbols_array = [values_or_symbols_array]
-        end
-        send(:value_setter, values_or_symbols_array, bitwise_mapping)
+        send(:value_setter, Array(values_or_symbols_array), bitwise_mapping)
       end
 
       # masks symbol presence
