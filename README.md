@@ -31,6 +31,19 @@ attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
 
 You have a website with many locales (English, French, German...) with specific content in each locale. You want your users to be able to chose which content they want to see and you want to be able to query the users by the locales they have choosen.
 
+Start with migration
+```ruby
+class CreateUsers < ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      # [...]
+      t.integer :locales_value
+    end
+  end
+end
+```
+   
+Model
 ```ruby
 
 class User < ActiveRecord::Base
@@ -79,6 +92,17 @@ User.with_all_locales(:en, :fr)
     </td>
     <td>
       Return values as symbols
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Class#locales=([value_or_sym, ..])</code>
+    </td>
+    <td>
+      <code>[<Symbol>, ...]</code>
+    </td>
+    <td> 
+      Given an array of values (Fixnum or Symbol) or single value (Fixnum or Symbol) add them to value.
     </td>
   </tr>
   <tr>
