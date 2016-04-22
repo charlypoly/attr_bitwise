@@ -182,8 +182,12 @@ module AttrBitwise
     # each sym get a power of 2 value
     def build_mapping(symbols, name)
       mapping = {}.tap do |hash|
-        symbols.each_with_index do |key, i|
-          hash[key] = 2**i
+        if symbols.is_a?(Hash)
+          hash.merge!(symbols.sort_by{|k,v| v}.to_h)
+        else
+          symbols.each_with_index do |key, i|
+            hash[key] = 2**i
+          end
         end
         hash[:empty] = 0
       end
