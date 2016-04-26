@@ -200,7 +200,7 @@ module AttrBitwise
 
     def validate_user_defined_values!(hash, name)
       hash.select{|key,value| (Math.log2(value) % 1.0)!=0}.tap do |invalid_options|
-        if invalid_options.count > 1
+        if invalid_options.any?
           raise(ArgumentError, "#{invalid_options.to_s} are not valid log2 options for #{name}")
         end
       end
