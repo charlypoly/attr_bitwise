@@ -184,7 +184,7 @@ module AttrBitwise
     def build_mapping(symbols, name)
       mapping = {}.tap do |hash|
         if symbols.is_a?(Hash)
-          validate_user_defined_values(symbols, name)
+          validate_user_defined_values!(symbols, name)
           hash.merge!(symbols.sort_by{|k,v| v}.to_h)
         else
           symbols.each_with_index do |key, i|
@@ -198,7 +198,7 @@ module AttrBitwise
       const_set(const_mapping_name, mapping)
     end
 
-    def validate_user_defined_values(hash, name)
+    def validate_user_defined_values!(hash, name)
       hash.select{|key,value| (Math.log2(value) % 1.0)!=0}.tap do |invalid_options|
         if invalid_options.count > 1
           raise(ArgumentError, "#{invalid_options.to_s} are not valid log2 options for #{name}")
