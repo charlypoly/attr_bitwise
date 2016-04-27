@@ -27,6 +27,13 @@ Bitwise attribute for ruby class and Rails model
 attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
 ```
 
+Alternatively, you can explicitly specify your states by supplying a hash with the values. 
+
+```ruby
+attr_bitwise :<name>, mapping: {<sym1: 1, sym2: 2, sym3: 4>} [, column_name: <column_name>]
+```
+
+
 ## Example
 
 You have a website with many locales (English, French, German...) with specific content in each locale. You want your users to be able to chose which content they want to see and you want to be able to query the users by the locales they have chosen.
