@@ -201,7 +201,7 @@ module AttrBitwise
     def validate_user_defined_values!(hash, name)
       hash.select{|key,value| (Math.log2(value) % 1.0)!=0}.tap do |invalid_options|
         if invalid_options.any?
-          raise(ArgumentError, "#{invalid_options.to_s} are not valid log2 options for #{name}")
+          raise(ArgumentError, "#{name} value should be a power of two number (#{invalid_options.to_s})")
         end
       end
     end
