@@ -29,7 +29,7 @@ attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
 
 ## Example
 
-You have a website with many locales (English, French, German...) with specific content in each locale. You want your users to be able to chose which content they want to see and you want to be able to query the users by the locales they have choosen.
+You have a website with many locales (English, French, German...) with specific content in each locale. You want your users to be able to chose which content they want to see and you want to be able to query the users by the locales they have chosen.
 
 Start with migration
 ```ruby
