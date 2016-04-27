@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attr_bitwise (0.0.2)
+    attr_bitwise (0.0.3)
       activesupport
 
 GEM
