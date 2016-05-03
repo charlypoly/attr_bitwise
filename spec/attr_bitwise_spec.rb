@@ -8,11 +8,14 @@ describe AttrBitwise do
     include AttrBitwise
 
     attr_accessor :fruits_value
+    attr_accessor :vegetables_value
 
     attr_bitwise :fruits, mapping: [:banana, :apple]
+    attr_bitwise :vegetables, mapping: [:carrot, :pepper]
 
     def initialize
       @fruits_value = 0
+      @vegetables_value = 0
     end
 
   end
@@ -61,6 +64,11 @@ describe AttrBitwise do
       it 'should set proper value' do
         expect(subject.fruits_value).to eq 3
         expect(subject.fruits).to eq [:banana, :apple]
+      end
+
+      it 'shouldn\'t set values in other field' do
+        expect(subject.vegetables_value).to eq 0
+        expect(subject.vegetables).to eq []
       end
 
     end

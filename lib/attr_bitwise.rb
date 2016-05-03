@@ -63,33 +63,28 @@ module AttrBitwise
     def attr_bitwise(name, column_name: nil, mapping:)
       column_name = "#{name}_value" unless column_name.present?
 
-      # mask attribute_accessor (internals)
-      define_method('value') { send(column_name) }
-      define_method('value=') { |value| send("#{column_name}=", value) }
-
       # build mapping
       bitwise_mapping = build_mapping(mapping, name)
 
       # mask to symbols helper
-      define_method("#{name}") { send(:value_getter, bitwise_mapping) }
-
+      define_method("#{name}") { send(:value_getter, column_name, bitwise_mapping) }
       define_method("#{name}=") do |values_or_symbols_array|
-        send(:value_setter, Array(values_or_symbols_array), bitwise_mapping)
+        send(:value_setter, column_name, Array(values_or_symbols_array), bitwise_mapping)
       end
 
       # masks symbol presence
       define_method("#{name.to_s.singularize}?") do |value_or_symbol|
-        send(:value?, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
+        send(:value?, column_name, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
       end
 
       # add value to mask
       define_method("add_#{name.to_s.singularize}") do |value_or_symbol|
-        send(:add_value, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
+        send(:add_value, column_name, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
       end
 
       # remove value from mask
       define_method("remove_#{name.to_s.singularize}") do |value_or_symbol|
-        send(:remove_value, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
+        send(:remove_value, column_name, force_to_bitwise_value(value_or_symbol, bitwise_mapping))
       end
 
       # compute values union against mask
@@ -226,35 +221,35 @@ module AttrBitwise
 
   # Return current value to symbols array
   #   Ex : 011 => :slots, :credits
-  def value_getter(mapping)
+  def value_getter(name, mapping)
     ComparableSymbolsArray.new(
-      mapping.values.select { |pv| (value & pv) != 0 }.
+      mapping.values.select { |pv| (send(name) & pv) != 0 }.
         map { |v| value_to_sym(v, mapping) }
     )
   end
 
   # Set current values from values array
-  def value_setter(values_or_symbols_array, mapping)
-    self.value = 0
-    values_or_symbols_array.each { |val| add_value(force_to_bitwise_value(val, mapping)) }
+  def value_setter(column_name, values_or_symbols_array, mapping)
+    send("#{column_name}=", 0)
+    values_or_symbols_array.each { |val| add_value(column_name, force_to_bitwise_value(val, mapping)) }
   end
 
   # Return if value presents in mask (raw value)
-  def value?(val)
-    value & val != 0
+  def value?(column_name, val)
+    send(column_name) & val != 0
   end
 
   # add `value_or_symbol` to mask
   #   Ex, with values = `10`
   #     add_value(1) => 11
-  def add_value(val)
-    self.value |= val
+  def add_value(column_name, val)
+    send("#{column_name}=", send(column_name) | val)
   end
 
   # remove `value_or_symbol` to mask
   #   Ex, with values = `11`
   #     remove_value(1) => 10
-  def remove_value(val)
-    self.value &= ~val
+  def remove_value(column_name, val)
+    send("#{column_name}=", send(column_name) & ~val)
   end
 end
