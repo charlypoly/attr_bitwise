@@ -27,7 +27,7 @@ Bitwise attribute for ruby class and Rails model
 attr_bitwise :<name>, mapping: <values_sym> [, column_name: <column_name>]
 ```
 
-Alternatively, you can explicitly specify your states by supplying a hash with the values. 
+Alternatively, you can explicitly specify your states by supplying a hash with the values.
 
 ```ruby
 attr_bitwise :<name>, mapping: {<sym1: 1, sym2: 2, sym3: 4>} [, column_name: <column_name>]
@@ -49,7 +49,7 @@ class CreateUsers < ActiveRecord::Migration
   end
 end
 ```
-   
+
 Model
 ```ruby
 
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
 
 end
 
-### 
+###
 
 # return all users who can see at least english or french content
 User.with_any_locales(:en, :fr)
@@ -108,7 +108,7 @@ User.with_all_locales(:en, :fr)
     <td>
       <code>[<Symbol>, ...]</code>
     </td>
-    <td> 
+    <td>
       Given an array of values (Fixnum or Symbol) or single value (Fixnum or Symbol) add them to value.
     </td>
   </tr>
@@ -182,7 +182,7 @@ User.with_all_locales(:en, :fr)
   </tr>
   <tr>
     <td>
-      <code>Class#locales_mapping</code>
+      <code>Class::LOCALES_MAPPING</code>
     </td>
     <td>
       <code>Hash</code>
