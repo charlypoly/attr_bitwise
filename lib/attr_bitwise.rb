@@ -234,9 +234,9 @@ module AttrBitwise
     values_or_symbols_array.each { |val| add_value(column_name, force_to_bitwise_value(val, mapping)) }
   end
 
-  # Return if value presents in mask (raw value)
+  # Return if value presents in mask (raw value) and mask set
   def value?(column_name, val)
-    send(column_name) & val != 0
+    ![0, false].include?(send(column_name) & val)
   end
 
   # add `value_or_symbol` to mask
